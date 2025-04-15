@@ -1,0 +1,5 @@
+azure-ai-inference
+azure-ai-projects==1.0.0b8
+azure-identity
+fastapi
+python_dotenv>=1.0.1, <2.0.0

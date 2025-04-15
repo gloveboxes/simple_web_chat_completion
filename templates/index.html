@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head><title>Chat</title></head>
+<body>
+    <form id="f"><button>Send</button><input id="p" placeholder="Message" style="width: 60%;" required></form>
+    <div id="c"></div>
+    <script>
+        document.getElementById('f').onsubmit = e => {
+            e.preventDefault();
+            const p = document.getElementById('p'), c = document.getElementById('c');
+            c.innerHTML += `<div>You: ${p.value}</div>`;
+            const r = document.createElement('div');
+            r.textContent = 'Assistant: ';
+            c.appendChild(r);
+            const s = new EventSource(`/chat?prompt=${encodeURIComponent(p.value)}`);
+            s.onmessage = e => e.data === '[DONE]' ? s.close() : r.textContent += e.data;
+            s.onerror = () => s.close();
+            p.value = '';
+        };
+    </script>
+</body>
+</html>
